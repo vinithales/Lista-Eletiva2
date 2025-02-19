@@ -93,4 +93,8 @@ Route::post('/listaex4', function(Request $request){
     return view('lista.ex4', compact('area'));
 });
 
+Route::get('/ex5', function(){
+    return view('lista.ex5');
+});
 
+Route::post()
