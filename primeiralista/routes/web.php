@@ -51,3 +51,17 @@ Route::post('/listaex1', function(Request $request){
 
     return view('lista.ex1', compact('media'));
 });
+
+
+Route::get('/ex2', function(){
+    return view('lista.ex2');
+});
+
+Route::post('/listaex2', function(Request $request){
+    $celsius = floatval($request->input('celsius'));
+
+    $fahrenheit = ($celsius * 1.8) + 32;
+    
+    return view('lista.ex2', compact('fahrenheit'));
+
+});
