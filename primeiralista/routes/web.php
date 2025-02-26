@@ -97,4 +97,3 @@ Route::get('/ex5', function(){
     return view('lista.ex5');
 });
 
-Route::post()
