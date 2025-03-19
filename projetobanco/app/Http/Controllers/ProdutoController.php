@@ -36,9 +36,10 @@ class ProdutoController extends Controller
     {
         try {
             Produto::create($request->all());
-            return redirect()->route('produto.index')
+            return redirect()->route('produtos.index')
                 ->with('sucesso', 'Produto inserido com sucesso!');
         } catch (Exception $e) {
+        
             Log::error("Erro ao criar o produto: ".$e->getMessage(), [
                 'stack' => $e->getTraceAsString(),
                 'request' => $request->all()
