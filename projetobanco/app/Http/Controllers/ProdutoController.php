@@ -55,7 +55,9 @@ class ProdutoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+        $categorias = Categoria::all();
+        return view ("produtos.show", compact('produto', 'categorias'));
     }
 
     /**
@@ -63,7 +65,9 @@ class ProdutoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+        $categorias = Categoria::all();
+        return view ("produtos.edit", compact('produto', 'categorias'));
     }
 
     /**
@@ -71,7 +75,20 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try{
+            $produto = Produto::findOrFail($id);
+            $produto->update($request->all());
+            return redirect()->route('produtos.index')
+                ->with('sucesso', 'Produto alterado com sucesso!');            
+
+        }catch (Exception $e){
+            Log::error("Erro ao atualizar o produto: " .$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
+            return redirect()->route('produtos.index')
+                ->with('erro','Erro ao editar!');
+        }
     }
 
     /**
@@ -79,6 +96,18 @@ class ProdutoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $produto = Produto::findOrFail($id);
+            $produto->delete();
+            return redirect()->route('produtos.index')
+                ->with('sucesso', 'Produto excluido com sucesso!');            
+
+        }catch (Exception $e){
+            Log::error("Erro ao excluir o produto: " .$e->getMessage(), [
+                'stack' => $e->getTraceAsString()
+            ]);
+            return redirect()->route('produtos.index')
+                ->with('erro','Erro ao excluir!');
+        }
     }
 }
